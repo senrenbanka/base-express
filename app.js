@@ -1,14 +1,19 @@
 const express = require('express')
   , app = express()
   , bodyParser = require('body-parser')
-  , port = process.env.PORT || 3000
+  , port = process.env.PORT || 8090
 
-app.set('view engine', 'pug')
-app.set('views', './views')
 
 app.use(express.static('public'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
-app.use(require('./controllers'))
+
+app.get('/', (req, res) => {
+  res.send('Hello World!')
+})
+
+app.get('/api', (req, res) => {
+  res.send('api')
+})
 
 app.listen(port, () => console.log(`Listening on port ${port}`))
