@@ -15,26 +15,14 @@
 
 // app.listen(port, () => console.log(`Listening on port ${port}`))
 
-const MongoClient = require('mongodb').MongoClient;
-const assert = require('assert');
 
-// Connection URL
-const url = 'mongodb://localhost:27017';
 
-// Database Name
-const dbName = 'testDb';
-
-new Promise((resolve, reject) => {
-  // Use connect method to connect to the server
-  MongoClient.connect(url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  }, async function (err, client) {
-    console.log("Connected successfully to server");
-
-    const db = client.db(dbName);
-    const collection = db.collection('documents');
-    // Insert some documents
+async function a() {
+  const MongoClient = require('mongodb').MongoClient;
+  const uri = "mongodb://localhost:27017";
+  const client = new MongoClient(uri, { useNewUrlParser: true });
+  client.connect(async err => {
+    const collection = client.db("test").collection("devices");
     const result = await collection.insertMany([{
       a: 1
     }, {
@@ -42,10 +30,12 @@ new Promise((resolve, reject) => {
     }, {
       a: 3
     }]);
-
+    console.log(result);
     client.close();
-    resolve("ok")
   });
-}).then(msg => {
-  console.log(msg)
-})
+
+  
+}
+
+a();
+
