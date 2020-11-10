@@ -17,25 +17,35 @@
 
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
- 
+
 // Connection URL
 const url = 'mongodb://localhost:27017';
- 
+
 // Database Name
-const dbName = 'myproject';
- 
+const dbName = 'testDb';
+
 new Promise((resolve, reject) => {
-// Use connect method to connect to the server
-MongoClient.connect(url, function(err, client) {
-  console.log("Connected successfully to server");
-  
-  const db = client.db(dbName);
- 
-  client.close();
-  resolve("ok")
-});
+  // Use connect method to connect to the server
+  MongoClient.connect(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  }, async function (err, client) {
+    console.log("Connected successfully to server");
+
+    const db = client.db(dbName);
+    const collection = db.collection('documents');
+    // Insert some documents
+    const result = await collection.insertMany([{
+      a: 1
+    }, {
+      a: 2
+    }, {
+      a: 3
+    }]);
+
+    client.close();
+    resolve("ok")
+  });
 }).then(msg => {
   console.log(msg)
 })
-
-
