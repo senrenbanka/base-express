@@ -23,18 +23,18 @@ async function a() {
   const client = new MongoClient(uri, { useNewUrlParser: true });
   client.connect(async err => {
     const collection = client.db("test").collection("devices");
-    const result = await collection.insertMany([{
-      a: 1
-    }, {
-      a: 2
-    }, {
-      a: 3
-    }]);
+    // const result = await collection.insertMany([{
+    //   a: 1
+    // }, {
+    //   a: 2
+    // }, {
+    //   a: 3
+    // }]);
+    const result = await collection.find().toArray();
     console.log(result);
     client.close();
   });
 
-  
 }
 
 a();

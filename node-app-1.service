@@ -1,5 +1,5 @@
 [Service]
-ExecStart=/root/node-v6.9.5-linux-x64/bin/node /opt/app/app.js
+ExecStart=/usr/local/bin/node /opt/app/app.js
 
 Restart=always
 
